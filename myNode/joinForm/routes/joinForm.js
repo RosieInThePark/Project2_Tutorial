@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('2014722030 Hyunah Park joinForm.js check');
+  res.render('joinForm', {title : '2014722030 HyunahPark : Join Form!'});
 });
 
 module.exports = router;
