@@ -25,7 +25,7 @@ router.get('/list/:page', function(req, res, next) {
       if (err) console.error("err : " + err);
       console.log("rows : " + JSON.stringify(rows));
 
-      res.render('list', { title: '게시판 전체를 조회', rows: rows });
+      res.render('list', { title: '2014722030 Hyunah park 게시판 전체를 조회', rows: rows });
       connection.release();
 
       //Don't use the connection here, it has been returned to the pool.
