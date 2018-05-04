@@ -77,5 +77,46 @@ router.get('/read/:idx', function(req, res, next){
   });
 });
 
+//글수정 화면 표시 GET
+router.get('/update', function(req, res, next){
+  var idx = req.query.idx;
+
+  pool.getConnection(function(err, connection){
+    if(err) console.error("커넥션 객체 얻어오기 에러 : ", err);
+
+    var sql = "select idx, creator_id, title, content, hit from board where idx=?";
+    connection.query(sql, [idx], function(err, rows){
+      if(err) console.error(err);
+      console.log("update에서 1개 글 조회 결과 확인 : ", rows);
+      res.render('update', {title:"2014722030 Hyunah Park 글 수정", row:rows[0]});
+      connection.release();
+    });
+  });
+});
+
+//글 수정 로직 처리 post
+router.post('/update', function(req, res, next){
+  var idx = req.body.idx;
+  var creator_id = req.body.creator_id;
+  var title = req.body.title;
+  var content = req.body.content;
+  var passwd = req.body.passwd;
+  var datas = [creator_id, title, content, passwd];
+
+  pool.getConnection(function(err, connection) {
+    var sql = "update board set creator_id=?, title=?, content=? where idx=? and passwd=?";
+    connection.query(sql, [creator_id, title, content, idx, passwd], function(err, result){
+      console.log(result);
+      if(err) console.error("글 수정 중 에러 발생 err : ", err);
+      if(result.affectedRows==0) {
+        res.send("<script>alert('패스워드가 일치하지 않거나, 잘못된 요청으로 인해 값이 변경되지 않았습니다.');history.back();</script>");
+      }
+      else {
+        res.redirect('/board/read/'+idx);
+      }
+      connection.release();
+    });
+  });
+});
 
 module.exports = router;
