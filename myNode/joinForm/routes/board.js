@@ -61,7 +61,21 @@ router.post('/write', function(req,res,next){
   });
 });
 
+//글조회 로직 처리 GET
+router.get('/read/:idx', function(req, res, next){
+  var idx = req.params.idx;
+  pool.getConnection(function(err, connection) {
+    var sql = "select idx, creator_id, title, content, hit from board where idx=?";
 
+    connection.query(sql,[idx], function(err, row){
+      if(err) console.error(err);
+
+      console.log("1개 글 조회 결과 확인 : ", row);
+      res.render('read', {title : "2014722030 Hyunah Park 글 조회", row:row[0]});
+      connection.release();
+    });
+  });
+});
 
 
 module.exports = router;
