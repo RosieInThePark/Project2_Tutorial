@@ -25,12 +25,16 @@ router.get('/list/:page', function(req, res, next) {
       if (err) console.error("err : " + err);
       console.log("rows : " + JSON.stringify(rows));
 
-      res.render('list', { title: '2014722030 Hyunah park 게시판 전체를 조회', rows: rows });
+      res.render('list', { title: '2014722030 Hyunah Park 게시판 전체 글 조회', rows: rows });
       connection.release();
 
       //Don't use the connection here, it has been returned to the pool.
     });
   });
+});
+//글쓰기 화면 표시 GET
+router.get('/write', function(req, res, next) {
+  res.render('write', {title : "2014722030 Hyunah Park 게시판 글 쓰기"});
 });
 
 module.exports = router;
