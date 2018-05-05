@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
       if (err) console.error("err : " + err);
       console.log("rows : " + JSON.stringify(rows));
 
-      res.render('index', { title: '2014722030 Hyunah Park test', rows: rows });
+      res.render('index', { title: 'test', rows: rows });
       connection.release();
 
       //Don't use the connection here, it has been returned to the pool.

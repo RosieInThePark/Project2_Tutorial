@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('joinForm', {title : '2014722030 HyunahPark : Join Form!'});
+  res.render('joinForm', {title : 'Join Form!'});
 });
 
 /*print User's input to JSON*/

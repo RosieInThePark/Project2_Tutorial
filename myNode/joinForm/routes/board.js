@@ -25,7 +25,7 @@ router.get('/list/:page', function(req, res, next) {
       if (err) console.error("err : " + err);
       console.log("rows : " + JSON.stringify(rows));
 
-      res.render('list', { title: '2014722030 Hyunah Park 게시판 전체 글 조회', rows: rows });
+      res.render('list', { title: '게시판 전체 글 조회', rows: rows });
       connection.release();
 
       //Don't use the connection here, it has been returned to the pool.
@@ -35,7 +35,7 @@ router.get('/list/:page', function(req, res, next) {
 
 //글쓰기 화면 표시 GET
 router.get('/write', function(req, res, next) {
-  res.render('write', {title : "2014722030 Hyunah Park 게시판 글 쓰기"});
+  res.render('write', {title : "게시판 글 쓰기"});
 });
 
 //글쓰기 로직 처리 POST
@@ -71,7 +71,7 @@ router.get('/read/:idx', function(req, res, next){
       if(err) console.error(err);
 
       console.log("1개 글 조회 결과 확인 : ", row);
-      res.render('read', {title : "2014722030 Hyunah Park 글 조회", row:row[0]});
+      res.render('read', {title : "글 조회", row:row[0]});
       connection.release();
     });
   });
@@ -88,7 +88,7 @@ router.get('/update', function(req, res, next){
     connection.query(sql, [idx], function(err, rows){
       if(err) console.error(err);
       console.log("update에서 1개 글 조회 결과 확인 : ", rows);
-      res.render('update', {title:"2014722030 Hyunah Park 글 수정", row:rows[0]});
+      res.render('update', {title:"글 수정", row:rows[0]});
       connection.release();
     });
   });
