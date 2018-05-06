@@ -8,7 +8,7 @@
   <body>
     <h1><%= title%></h1>
 
-    <form action="/board/write" method="post" onsubmit="return onWriteSubmit()">
+    <form action="/board/write" method="post" onsubmit="return onWriteSubmit()" enctype = "multipart/form-data">
       <table border="1">
         <tr>
           <td>작성자</td>
@@ -24,7 +24,14 @@
         </tr>
         <tr>
           <td>이미지</td>
-          <td><input type="file" name="file" id="file" required/></td>
+          <td><input type="file" name="image" id="image" accept="image/*" onchange="loadFile(event)"required/></td>
+          <img id="output"/>
+          <script>
+            var loadFile = function(event){
+              var output = document.getElementById('output');
+              output.src = URL.createObjectURL(event.target.files[0]);
+            };
+          </script>
         </tr>
         <tr>
           <td>패스워드</td>
@@ -64,6 +71,13 @@
           var message = "패스워드를 입력해 주세요";
           $("#passwd").val("");
           $("#passwd").focus();
+          alert(message);
+          return false;
+        }
+        if($("#image").val().trim()=="") {
+          var message = "이미지를 업로드해 주세요";
+          $("#image").val("");
+          $("#image").focus();
           alert(message);
           return false;
         }

@@ -48,7 +48,7 @@ router.post('/write', function(req,res,next){
 
   pool.getConnection(function(err, connection) {
     //Use the connection
-    var sqlForInsertBoard = "insert into board(creator_id, title, content, passwd) values(?,?,?,?)";
+    var sqlForInsertBoard = "insert into board(creator_id, title, content, image, passwd) values(?,?,?,?,?)";
     connection.query(sqlForInsertBoard, datas, function(err, rows){
       if(err) console.error("err : " + err);
       console.log("rows : " + JSON.stringify(rows));
