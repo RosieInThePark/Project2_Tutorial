@@ -1,6 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+var upload = multer({storage : storage});
+
+//router.use(express.static('uploads'));
 /*Database(MySQL)*/
 var mysql = require('mysql');
 var pool = mysql.createPool({
@@ -39,12 +52,13 @@ router.get('/write', function(req, res, next) {
 });
 
 //글쓰기 로직 처리 POST
-router.post('/write', function(req,res,next){
+router.post('/write', upload.single('image'), function(req,res,next){
   var creator_id = req.body.creator_id;
   var title = req.body.title;
   var content = req.body.content;
   var passwd = req.body.passwd;
-  var datas = [creator_id, title, content, passwd];
+  var images = "/uploads/"+req.file.filename;
+  var datas = [creator_id, title, content, images, passwd];
 
   pool.getConnection(function(err, connection) {
     //Use the connection
@@ -65,13 +79,14 @@ router.post('/write', function(req,res,next){
 router.get('/read/:idx', function(req, res, next){
   var idx = req.params.idx;
   pool.getConnection(function(err, connection) {
-    var sql = "select idx, creator_id, title, content, hit from board where idx=?";
+    var sql = "select idx, creator_id, title, content, image, hit from board where idx=?";
 
     connection.query(sql,[idx], function(err, row){
       if(err) console.error(err);
 
       console.log("1개 글 조회 결과 확인 : ", row);
       res.render('read', {title : "글 조회", row:row[0]});
+
       connection.release();
     });
   });
@@ -84,7 +99,7 @@ router.get('/update', function(req, res, next){
   pool.getConnection(function(err, connection){
     if(err) console.error("커넥션 객체 얻어오기 에러 : ", err);
 
-    var sql = "select idx, creator_id, title, content, hit from board where idx=?";
+    var sql = "select idx, creator_id, title, content, image, hit from board where idx=?";
     connection.query(sql, [idx], function(err, rows){
       if(err) console.error(err);
       console.log("update에서 1개 글 조회 결과 확인 : ", rows);

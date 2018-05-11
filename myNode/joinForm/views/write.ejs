@@ -24,14 +24,7 @@
         </tr>
         <tr>
           <td>이미지</td>
-          <td><input type="file" name="image" id="image" accept="image/*" onchange="loadFile(event)"required/></td>
-          <img id="output"/>
-          <script>
-            var loadFile = function(event){
-              var output = document.getElementById('output');
-              output.src = URL.createObjectURL(event.target.files[0]);
-            };
-          </script>
+          <td><input type="file" name="image" id="image" accept="image/*" required/></td>
         </tr>
         <tr>
           <td>패스워드</td>

@@ -23,6 +23,10 @@
           <td><textarea name="content" id="content" cols="30" rows="10" required><%=row.content%></textarea></td>
         </tr>
         <tr>
+          <td>이미지</td>
+          <td><input type="file" name="image" id="image" value = "<%=row.image%>" accept="image/*" required/></td>
+        </tr>
+        <tr>
           <td>패스워드</td>
           <td><input type="password" name="passwd" id="passwd" required/></td>
         </tr>
