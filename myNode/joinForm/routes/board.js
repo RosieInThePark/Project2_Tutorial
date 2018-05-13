@@ -134,4 +134,18 @@ router.post('/update', function(req, res, next){
   });
 });
 
+//글 삭제 GET
+router.get('/delete2/:idx', function(req, res){
+  var idx = req.params.idx;
+  pool.getConnection(function(err, connection) {
+    var sql = "delete from board where idx=?";
+    connection.query(sql, [idx], function(err, result){
+      console.log(result);
+      if(err) console.error("글 삭제 중 에러 발생 err : ", err);
+      res.redirect('/board/list/1');
+      connection.release();
+    });
+  });
+});
+
 module.exports = router;
